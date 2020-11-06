@@ -1,8 +1,14 @@
-# ==============================================================
-# ==============================================================
-# ====================  UI DF 가공  ============================
-# ==============================================================
-# ==============================================================
+import os
+import sys
+import urllib.request
+import csv
+import ast
+import time
+import pandas as pd
+from pandas import DataFrame
+from pathlib import Path
+
+from com_dayoung_api.cmm.util.file_helper import FileReader, FileChecker
 
 class MovieRatingDf:
     def __init__(self):
@@ -23,7 +29,7 @@ class MovieRatingDf:
     def read_movie_lens_rating_csv(self):
         print('***** 무비렌즈 평점 데이터 읽기*****')
         path = os.path.abspath("")
-        fname = '\com_dayoung_api\\resources\data\movie_lens\\ratings_small.csv'
+        fname = '\com_dayoung_api\cop\\rat\model\data\\ratings_small.csv'
         # path = os.path.abspath("")
         # fname = '\data\movie_lens\\ratings_small.csv'
         movie_lens_meta_df = pd.read_csv(path + fname, encoding='utf-8')

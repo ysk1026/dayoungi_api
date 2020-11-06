@@ -1,7 +1,4 @@
 from typing import List
-from flask_restful import Resource, reqparse
-from flask import request
-from flask import jsonify
 import json
 import pandas as pd
 import numpy as np
@@ -14,13 +11,13 @@ from sqlalchemy import create_engine
 from sqlalchemy import func
 
 class ReviewDfo(object):
+    
     def __init__(self):
         self.fileReader = FileReader()
         self.data = os.path.join(os.path.abspath(os.path.dirname(__file__)) + '/data')
         
     def hook(self):
         train = 'rating.csv'
-        movie = 'kmdb_csv.csv'
         this = self.fileReader
         this.train = self.new_model(train) # payload
         df = pd.DataFrame(

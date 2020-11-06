@@ -1,3 +1,10 @@
+from flask_restful import Resource, reqparse
+from flask import request
+import json
+from flask import jsonify
+from com_dayoung_api.cop.rev.model.review_dto import ReviewDto
+from com_dayoung_api.cop.rev.model.review_dao import ReviewDao
+
 class Review(Resource):
     
     @staticmethod
@@ -85,8 +92,7 @@ class Reviews(Resource):
         return data, 200
     
 
-class ReviewDel(Resource):
-    
+
 
 
     
