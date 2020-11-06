@@ -21,14 +21,18 @@ class Crawling:
                        ("안소희", "f"), ("강동원", "m"), ("하정우",  "m"),
                        ("김혜수",  "f"), ("현빈",  "m"), ("송강호",  "m"),
                        ("지창욱",  "m"), ("한효주",  "f"), ("정해인",  "m")]
-        # 밑에 코드를 주석 처리 안하면 1500개 크롤링해서 300개가 들어옴, 안하면 10개
-        # actors_name_2 = self.crawl_actors_name()
+        actors_name_2 = self.crawl_actors_name()
         # actors_name.extend(actors_name_2)
         actor_id = 1
         # actors_name = ["이병헌", "이진욱"]
         # actors_name = [('이병헌', "m")]
         Dfo = ActorDfo()
-        data = Dfo.actors_to_df(actors_name, actor_id)
+        act_df = Dfo.actors_to_df(actors_name, actor_id)
+        mycolumns = {
+        'actor_id':'act_id'
+        }
+        sort_df = act_df.rename(columns=mycolumns)
+        data = sort_df
         return data
 
     def crawl_actors_name(self):

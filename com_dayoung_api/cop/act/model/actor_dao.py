@@ -1,16 +1,15 @@
 import json
-from com_dayoung_api.ext.db import db, openSession
 import pandas as pd
 from sqlalchemy import func
+
+from com_dayoung_api.ext.db import db, openSession
 from com_dayoung_api.cop.act.model.actor_kdd import Crawling
-# from com_dayoung_api.cop.act.resource import 
 from com_dayoung_api.cop.act.model.actor_dto import ActorDto
 from com_dayoung_api.cop.act.model.actor_dfo import ActorDfo
 
 Session = openSession()
 session = Session()
 actor_preprocess = Crawling()
-
 
 class ActorDao(ActorDto):
     @staticmethod
@@ -36,7 +35,7 @@ class ActorDao(ActorDto):
 
     @staticmethod
     def count():
-        return session.query(func.count(ActorDto.actor_id)).one()
+        return session.query(func.count(ActorDto.act_id)).one()
 
     @staticmethod
     def save(actor):
@@ -71,15 +70,15 @@ class ActorDao(ActorDto):
         return cls.query.filer_by(name == name)
 
     @classmethod
-    def find_by_id(cls, actor_id):
-        return session.query(ActorDto).filter(ActorDto.actor_id.like(f'{actor_id}')).one()
+    def find_by_id(cls, act_id):
+        return session.query(ActorDto).filter(ActorDto.act_id.like(f'{act_id}')).one()
 
     @classmethod
     def find_id_by_name(cls, name):
         # 여기 나중에 조금 고쳐야 할 함
         actor = session.query(ActorDto).filter(ActorDto.name.like(f'{name}')).one()
-        print(actor.actor_id)
-        return actor.actor_id
+        print(actor.act_id)
+        return actor.act_id
 
     @classmethod
     def delete_actor_by_setting_state_to_one(cls, id):
@@ -87,13 +86,13 @@ class ActorDao(ActorDto):
         # simply updates actor column "state" to 0 which will hide its
         # display from the user where as user will think that the
         # selected actor has been deleted
-        session.query(ActorDto).filter(ActorDto.actor_id == id).update({ActorDto.state: "0"}, synchronize_session=False)
+        session.query(ActorDto).filter(ActorDto.act_id == id).update({ActorDto.state: "0"}, synchronize_session=False)
         session.commit()
         session.close()
 
     @classmethod
     def add_actor_by_setting_state_to_one(cls, id):
-        session.query(ActorDto).filter(ActorDto.actor_id == id).update({ActorDto.state: "1"}, synchronize_session=False)
+        session.query(ActorDto).filter(ActorDto.act_id == id).update({ActorDto.state: "1"}, synchronize_session=False)
         session.commit()
         session.close()
 

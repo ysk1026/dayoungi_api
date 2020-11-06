@@ -10,7 +10,7 @@ from pathlib import Path
 
 from com_dayoung_api.cmm.util.file_helper import FileReader, FileChecker
 
-class MovieRatingDf:
+class RatingDfo:
     def __init__(self):
         self.fileReader = FileReader()  
         self.filechecker = FileChecker()
@@ -23,13 +23,13 @@ class MovieRatingDf:
         arrange_movie_lens_rating_df = self.arrange_movie_lens_rating_df(movie_lens_rating_df)
 
         print('***** 무비 렌즈 UI용 DF가공 완료 *****')
-
+        
         return arrange_movie_lens_rating_df
 
     def read_movie_lens_rating_csv(self):
         print('***** 무비렌즈 평점 데이터 읽기*****')
         path = os.path.abspath("")
-        fname = '/com_dayoung_api/cop/rat/model/data/ratings_small.csv'
+        fname = '\com_dayoung_api\cop\\rat\model\data\\ratings_small.csv'
         # path = os.path.abspath("")
         # fname = '\data\movie_lens\\ratings_small.csv'
         movie_lens_meta_df = pd.read_csv(path + fname, encoding='utf-8')
@@ -86,6 +86,6 @@ class MovieRatingDf:
 
 
 if __name__ == "__main__":
-    test = MovieRatingDf()
+    test = RatingDfo()
     test.hook()
 

@@ -1,6 +1,5 @@
-
-
 from flask_restful import Resource, reqparse
+
 from com_dayoung_api.cop.act.model.actor_dao import ActorDao
 
 parser = reqparse.RequestParser()

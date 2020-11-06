@@ -1,11 +1,12 @@
-from com_dayoung_api.cop.mov.model.movie_dao import RecoMovieDao
 from flask_restful import Resource, reqparse
 
-class RecoMovieSearch(Resource):
+from com_dayoung_api.cop.mov.model.movie_dao import MovieDao
+
+class MovieSearch(Resource):
     def get(self, title):
         print("SEARCH 진입")
         print(f'타이틀 : {title}')
-        movie = RecoMovieDao.find_by_title(title)
+        movie = MovieDao.find_by_title(title)
         # review = {review[i]: review[i + 1] for i in range(0, len(review), 2)}
         # review = json.dump(review)
         movielist = []

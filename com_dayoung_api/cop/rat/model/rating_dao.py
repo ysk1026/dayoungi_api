@@ -9,27 +9,27 @@ from sqlalchemy import func
 
 from com_dayoung_api.ext.db import db, openSession
 
-from com_dayoung_api.cop.rat.model.rating_dfo import MovieRatingDf
-from com_dayoung_api.cop.rat.model.rating_dto import MovieRatingDto
+from com_dayoung_api.cop.rat.model.rating_dfo import RatingDfo
+from com_dayoung_api.cop.rat.model.rating_dto import RatingDto
 
 Session = openSession()
 session = Session()
-class MovieRatingDao(MovieRatingDto):
+class RatingDao(RatingDto):
 
     @staticmethod
     def bulk():
         print('***** [movie_rating] df 삽입 *****')
-        m = MovieRatingDf()
+        m = RatingDfo()
         df = m.hook()
         print(df)
-        session.bulk_insert_mappings(MovieRatingDto, df.to_dict(orient='records'))
+        session.bulk_insert_mappings(RatingDto, df.to_dict(orient='records'))
         session.commit()
         session.close()
         print('***** [movie_rating] df 삽입 완료 *****')
 
     @classmethod
     def count(cls):
-        return session.query(func.count(MovieRatingDto.ratingid)).one()
+        return session.query(func.count(RatingDto.rat_id)).one()
 
     @classmethod
     def find_all(cls):
@@ -39,15 +39,15 @@ class MovieRatingDao(MovieRatingDto):
         return json.loads(df.to_json(orient='records'))
 
     @staticmethod
-    def find_by_id(ratingid):
+    def find_by_id(rat_id):
         print('##### find id #####')
-        return session.query(MovieRatingDto).filter(MovieRatingDto.ratingid.like(ratingid)).all()
+        return session.query(RatingDto).filter(RatingDto.rat_id.like(rat_id)).all()
 
     @staticmethod
     def register_rating(rating):
         print('##### new rating data registering #####')
         print(rating)
-        newRating = MovieRatingDao(ratingid = rating['ratingid'],
+        newRating = RatingDao(rat_id = rating['rat_id'],
                             userid = rating['userid'],
                             movieid = rating['movieid'],
                             rating = rating['rating'])
@@ -60,18 +60,18 @@ class MovieRatingDao(MovieRatingDto):
     # session.query(테이블명).filter(테이블명.필드명 == 조건 값).update({테이블명.필드명:변경 값})
 
     @staticmethod
-    def modify_rating(ratingid):
+    def modify_rating(rat_id):
         print('##### rating data modify #####')
-        session.query(MovieRatingDto).filter(MovieRatingDto.ratingid == ratingid['ratingid']).update({MovieRatingDto.rating:ratingid['rating']})                                                        
+        session.query(RatingDto).filter(RatingDto.rat_id == rat_id['rat_id']).update({RatingDto.rating:rat_id['rating']})                                                        
         session.commit()
         session.close()
 
         print('##### rating data modify complete #####')
 
     @classmethod
-    def delete_rating(cls, ratingid):
+    def delete_rating(cls, rat_id):
         print('##### rating data delete #####')
-        data = cls.query.get(ratingid)
+        data = cls.query.get(rat_id)
         db.session.delete(data)
         session.commit()
         session.close()

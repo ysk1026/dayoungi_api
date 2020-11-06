@@ -7,7 +7,9 @@ import pandas as pd
 import numpy as np
 import os
 from com_dayoung_api.cmm.util.file_helper import FileReader
-from com_dayoung_api.cop.mov.model.movie_dao import RecoMovieDto
+from com_dayoung_api.cop.mov.model.movie_dto import MovieDto
+from com_dayoung_api.usr.model.user_dto import UserDto
+
 from pathlib import Path
 from com_dayoung_api.ext.db import db, openSession
 from sqlalchemy.orm import Session, sessionmaker
@@ -23,27 +25,27 @@ class ReviewDto(db.Model):
     content: str = db.Column(db.String(500))
     label: int = db.Column(db.Integer)
      
-    user_id: str = db.Column(db.String(30)) # db.ForeignKey(UserDto.user_id
-    movie_id: int = db.Column(db.Integer, db.ForeignKey(RecoMovieDto.movieid))
+    usr_id: str = db.Column(db.String(30), db.ForeignKey(UserDto.usr_id))
+    mov_id: int = db.Column(db.Integer, db.ForeignKey(MovieDto.mov_id))
     
     # movie = db.relationship('MovieDto', back_populates="reviews")
     
-    def __init__(self, title, content, label, user_id, movie_id):
+    def __init__(self, title, content, label, usr_id, mov_id):
         self.title = title
         self.content = content
         self.label = label
-        self.user_id = user_id
-        self.movie_id = movie_id
+        self.usr_id = usr_id
+        self.mov_id = mov_id
         
     def __repr__(self):
-        return f'rev_id = {self.rev_id}, user_id = {self.user_id}, movie_id = {self.movie_id},\
+        return f'rev_id = {self.rev_id}, usr_id = {self.usr_id}, mov_id = {self.mov_id},\
             title = {self.title}, content = {self.content}, label = {self.label}'
     
     def json(self):
         return {
             'rev_id' : self.rev_id,
-            'user_id' : self.user_id,
-            'movie_id' : self.movie_id,
+            'usr_id' : self.usr_id,
+            'mov_id' : self.mov_id,
             'title' : self.title,
             'content' : self.content,
             'label' : self.label
@@ -54,5 +56,5 @@ class ReviewVo:
     title: str = ''
     content: str = ''
     label: int = 0
-    user_id: str = ''
-    movie_id: int = 0
+    usr_id: str = ''
+    mov_id: int = 0

@@ -90,9 +90,3 @@ class Reviews(Resource):
         print('========== 10 ==========')
         data = ReviewDao.find_all()
         return data, 200
-    
-
-
-
-
-    

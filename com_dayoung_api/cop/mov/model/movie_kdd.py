@@ -63,9 +63,9 @@ null 값의 대체 입력 기능
 class NaverMovie:
     def __init__(self):
         self.reader = FileReader() 
-        self.client_id = ""                              # 네이버 api id (git 삭제!!!)
-        self.client_secret = ""                                # 네이버 api secret (git 삭제!!!)
-        self.none_image = '../images/none_image.jpg'    # 검색 결과에서 image가 없을 경우 사용할 image
+        self.client_id = ""                                     # 네이버 api id (git 삭제!!!)
+        self.client_secret = ""                                 # 네이버 api secret (git 삭제!!!)
+        self.none_image = '../images/none_image.jpg'            # 검색 결과에서 image가 없을 경우 사용할 image
 
     def hook(self):
         print('*'*10, 'START', '*'*10)

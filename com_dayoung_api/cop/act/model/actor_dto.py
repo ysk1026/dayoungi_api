@@ -3,12 +3,12 @@ from com_dayoung_api.ext.db import db, openSession
 class ActorDto(db.Model):
     __tablename__ = 'actors'
     __table_args__ = {'mysql_collate': 'utf8_general_ci'}
-    # 'photoUrl', 'age', 'actor_id', 'name', 'realName', 'religion', 'agency',
+    # 'photoUrl', 'age', 'act_id', 'name', 'realName', 'religion', 'agency',
     #  'spouse', 'children', 'debutYear', 'gender', 'state'
 
     # columns=['photoUrl', 'age','name','realName','religion','agency',
-    #          'spouse', 'children','debutYear','actor_id']
-    actor_id: str = db.Column(db.String(30), primary_key=True, index=True)
+    #          'spouse', 'children','debutYear','act_id']
+    act_id: str = db.Column(db.String(30), primary_key=True, index=True)
     name: str = db.Column(db.String(30))
     gender: str = db.Column(db.String(1))
     age: str = db.Column(db.String(30))
@@ -21,10 +21,10 @@ class ActorDto(db.Model):
     state: str = db.Column(db.String(1))
     photo_url: str = db.Column(db.String(200))
 
-    def __init__(self, photo_url, actor_id, name, gender, age, real_name,
+    def __init__(self, photo_url, act_id, name, gender, age, real_name,
                  spouse, children, debut_year, agency, religion, state):
         self.photo_url = photo_url
-        self.actor_id = actor_id
+        self.act_id = act_id
         self.name = name
         self.gender = gender
         self.age = age
@@ -39,7 +39,7 @@ class ActorDto(db.Model):
     def json(self):
         return {
             'photo_url': self.photo_url,
-            'actor_id': self.actor_id,
+            'act_id': self.act_id,
             'name': self.name,
             'gender': self.gender,
             'age': self.age,
@@ -54,7 +54,7 @@ class ActorDto(db.Model):
 
 
 class ActorVo:
-    actor_id: str = ''
+    act_id: str = ''
     photo_url: str = ''
     gender: str = ''
     age: str = ''

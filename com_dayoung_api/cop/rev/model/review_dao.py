@@ -7,7 +7,7 @@ import numpy as np
 import os
 from com_dayoung_api.cop.rev.model.review_dfo import ReviewDfo 
 from com_dayoung_api.cop.rev.model.review_dto import ReviewDto
-from com_dayoung_api.cop.mov.model.movie_dao import RecoMovieDao
+from com_dayoung_api.cop.mov.model.movie_dao import MovieDao
 from com_dayoung_api.ext.db import db, openSession
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import create_engine
@@ -15,12 +15,12 @@ from sqlalchemy import func
 
 class ReviewDao(ReviewDto):
     
-    # Dataset 안에 있는 Review row count
     @classmethod
     def count(cls):
-        return cls.query.count()
-    
-    # 영화별로 Grouping 후 각 영화 리뷰 갯수 및 Label 카운팅
+        Session = openSession()
+        session = Session()
+        return session.query(func.count(ReviewDto.rev_id)).one()
+
     @classmethod
     def group_by(cls):
         Session = openSession()
@@ -37,8 +37,7 @@ class ReviewDao(ReviewDto):
         titledict = {k: v for k, v in sorted(titledict.items(), key=lambda item: item[1])}
         return titledict
             
-    
-    # 전체 리뷰를 불러 온다.  
+                
     @classmethod
     def find_all(cls):
         sql = cls.query
@@ -48,8 +47,8 @@ class ReviewDao(ReviewDto):
         print(len(df['movie_id']))
         count = 0
         for movie in df_movie_id:
-            df_movie_id[count] = RecoMovieDao.find_by_id(movie).title_kor 
-            # print(RecoMovieDao.find_by_id(movie).title_kor)
+            df_movie_id[count] = MovieDao.find_by_id(movie).title_kor 
+            # print(MovieDao.find_by_id(movie).title_kor)
             count += 1
         return json.loads(df.to_json(orient='records'))
     

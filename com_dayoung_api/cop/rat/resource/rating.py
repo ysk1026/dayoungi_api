@@ -1,9 +1,9 @@
-from com_dayoung_api.cop.rat.model.rating_dao import MovieRatingDao
-from com_dayoung_api.cop.rat.model.rating_dto import MovieRatingDto
+from com_dayoung_api.cop.rat.model.rating_dao import RatingDao
+from com_dayoung_api.cop.rat.model.rating_dto import RatingDto
 from flask import request, jsonify
 from flask_restful import Resource, reqparse
 
-class MovieRating(Resource):
+class Rating(Resource):
     @staticmethod
     def post():
         parser = reqparse.RequestParser()
@@ -12,14 +12,14 @@ class MovieRating(Resource):
         parser.add_argument('movieid', type=int, required=True, help='This field should be a movieid')
         parser.add_argument('rating', type=float, required=True, help='This field should be a rating')    
         args = parser.parse_args()
-        ratings = MovieRatingDto(args['ratingid'], \
+        ratings = RatingDto(args['ratingid'], \
                         args['userid'], \
                         args['movieid'], \
                         args['rating'])
         print('*********')
         print(args)
         try:
-            MovieRatingDao.register_rating(args)
+            RatingDao.register_rating(args)
             return{'code':0, 'message':'SUCCESS'}, 200
         except:
             return {'message':'An error occured registering the rating'}, 500
@@ -27,7 +27,7 @@ class MovieRating(Resource):
     @staticmethod
     def get(id: str):
         try:
-            reco_movie = MovieRatingDao.find_by_id(id)
+            reco_movie = RatingDao.find_by_id(id)
             data = reco_movie.json()
             print(data)
             return data, 200
@@ -43,29 +43,29 @@ class MovieRating(Resource):
         parser.add_argument('movieid', type=int, required=False, help='This field should be a movieid')
         parser.add_argument('rating', type=float, required=True, help='This field should be a rating')    
         args = parser.parse_args()
-        ratings = MovieRatingDto(args['ratingid'], \
+        ratings = RatingDto(args['ratingid'], \
                         args['userid'], \
                         args['movieid'], \
                         args['rating'])
         print('*********')
         print(args)
         try:
-            MovieRatingDao.modify_rating(args)
+            RatingDao.modify_rating(args)
             return{'code':0, 'message':'SUCCESS'}, 200
         except:
             return {'message':'An error occured registering the rating'}, 500
 
-class MovieRatings(Resource):
+class Ratings(Resource):
     
     def post(self):
-        md = MovieRatingDao()
+        md = RatingDao()
         md.bulk('movies')
 
     def get(self):
-        data = MovieRatingDao.find_all()
+        data = RatingDao.find_all()
         return data, 200
 
-class MovieRatingDel(Resource):
+class RatingDel(Resource):
 
     @staticmethod
     def post():
@@ -77,7 +77,7 @@ class MovieRatingDel(Resource):
         ratingid = args['ratingid']
 
         try:
-            MovieRatingDao.delete_rating(ratingid)
+            RatingDao.delete_rating(ratingid)
             return{'code':0, 'message':'SUCCESS'}, 200
         except:
             return {'message':'An error occured registering the movie'}, 500

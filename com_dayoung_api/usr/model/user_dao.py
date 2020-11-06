@@ -1,7 +1,11 @@
+from sqlalchemy import func
+import pandas as pd
+import json
+
 from com_dayoung_api.ext.db import db, openSession
 from com_dayoung_api.usr.model.user_dto import UserDto
 from com_dayoung_api.usr.model.user_dfo import UserDfo
-from sqlalchemy import func
+
 
 Session = openSession()
 session = Session()
@@ -29,7 +33,7 @@ class UserDao(UserDto):
         데이터 베이스 안에 몇명의 유저들이 있는지
         숫자를 리턴한다
         """
-        return session.query(func.count(UserDto.user_id)).one()
+        return session.query(func.count(UserDto.usr_id)).one()
 
     @staticmethod
     def update(user):
@@ -43,7 +47,7 @@ class UserDao(UserDto):
         session = Session()
         print(f"{user.lname}")
         print(f"{user.fname}")
-        session.query(UserDto).filter(UserDto.user_id == user.user_id).update({UserDto.lname: user.lname,
+        session.query(UserDto).filter(UserDto.usr_id == user.usr_id).update({UserDto.lname: user.lname,
                                                                                UserDto.fname: user.fname,
                                                                                UserDto.age: user.age,
                                                                                UserDto.password: user.password,
@@ -64,7 +68,7 @@ class UserDao(UserDto):
     @classmethod
     def delete(cls, id):
         """
-        유저의 id 정보 (user_id) 를 가져와
+        유저의 id 정보 (usr_id) 를 가져와
         해당 id를 가진 유저를 데이터베이스에서
         삭제 시켜준다.
         """
@@ -94,12 +98,12 @@ class UserDao(UserDto):
         return session.query(UserDto).filter(UserDto.fname.like(f'%{name}%'))
 
     @classmethod
-    def find_by_id(cls, user_id):
+    def find_by_id(cls, usr_id):
         """
         주어진 아이디를 토대로 유저를 찾아서
         해당 정보를 리턴해준다.
         """
-        return session.query(UserDto).filter(UserDto.user_id.like(f'{user_id}')).one()
+        return session.query(UserDto).filter(UserDto.usr_id.like(f'{usr_id}')).one()
 
     @classmethod
     def login(cls, user):
@@ -111,13 +115,12 @@ class UserDao(UserDto):
         """
         print("----------------login")
         sql = cls.query\
-            .filter(cls.user_id.like(user.user_id))\
+            .filter(cls.usr_id.like(user.usr_id))\
             .filter(cls.password.like(user.password))
         print("login type ", type(sql))
         df = pd.read_sql(sql.statement, sql.session.bind)
         print(json.loads(df.to_json(orient='records')))
         return json.loads(df.to_json(orient='records'))
-
 
 if __name__ == "__main__":
     """

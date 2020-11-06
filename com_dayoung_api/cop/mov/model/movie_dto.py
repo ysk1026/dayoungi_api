@@ -19,9 +19,9 @@ from sqlalchemy import func
 
 from com_dayoung_api.ext.db import db, openSession
 
-class RecoMovieDto(db.Model):
+class MovieDto(db.Model):
     
-    __tablename__ = 'reco_movies'
+    __tablename__ = 'movies'
     __talbe_args__ = {'mysql_collate':'utf8_general_ci'}
     
     '''
@@ -41,7 +41,7 @@ class RecoMovieDto(db.Model):
     'link_naver', 
     'image_naver'
     '''
-    movieid : int = db.Column(db.Integer, primary_key = True, index = True)
+    mov_id : int = db.Column(db.Integer, primary_key = True, index = True)
     title_kor : str = db.Column(db.String(100))
     title_naver_eng : str = db.Column(db.String(100))
     genres_kor : str = db.Column(db.String(30))
@@ -57,7 +57,7 @@ class RecoMovieDto(db.Model):
     image_naver : str = db.Column(db.String(80))
 
     def __init__(self, 
-                movieid, 
+                mov_id, 
                 title_kor,
                 title_naver_eng, 
                 genres_kor, 
@@ -72,7 +72,7 @@ class RecoMovieDto(db.Model):
                 link_naver,
                 image_naver
                 ):
-        self.movieid = movieid
+        self.mov_id = mov_id
         self.title_kor = title_kor
         self.title_naver_eng = title_naver_eng
         self.genres_kor = genres_kor
@@ -90,7 +90,7 @@ class RecoMovieDto(db.Model):
 
     def json(self):
         return {
-            'movieid' : self.movieid,
+            'mov_id' : self.mov_id,
             'title_kor' : self.title_kor,
             'title_naver_eng' : self.title_naver_eng,
             'genres_kor' : self.genres_kor,
@@ -106,8 +106,8 @@ class RecoMovieDto(db.Model):
             'image_naver' : self.image_naver
         }
 
-class RecoMovieVo():
-    movieid: int = 0
+class MovieVo():
+    mov_id: int = 0
     title_kor: str = ''
     title_naver_eng: str = ''
     genres_kor: str = ''

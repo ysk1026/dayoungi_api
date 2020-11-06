@@ -1,11 +1,11 @@
 from flask import request, jsonify
 from flask_restful import Resource, reqparse
 
-from com_dayoung_api.cop.mov.model.movie_dao import RecoMovieDao
-from com_dayoung_api.cop.mov.model.movie_dto import RecoMovieDto
-from com_dayoung_api.cop.mov.model.movie_dfo import RecoMovieDf
+from com_dayoung_api.cop.mov.model.movie_dao import MovieDao
+from com_dayoung_api.cop.mov.model.movie_dto import MovieDto
+from com_dayoung_api.cop.mov.model.movie_dfo import MovieDf
 
-class RecoMovie(Resource):
+class Movie(Resource):
     @staticmethod
     def post():
         parser = reqparse.RequestParser()
@@ -27,7 +27,7 @@ class RecoMovie(Resource):
         print('*********')
         print(args)
         try:
-            RecoMovieDao.register_movie(args)
+            MovieDao.register_movie(args)
             return{'code':0, 'message':'SUCCESS'}, 200
         except:
             return {'message':'An error occured registering the movie'}, 500
@@ -37,7 +37,7 @@ class RecoMovie(Resource):
         print('##### get #####')
         print(id)
         try:
-            reco_movie = RecoMovieDao.find_by_title(id)
+            reco_movie = MovieDao.find_by_title(id)
             data = reco_movie.json()
             print(data)
             return data, 200
@@ -64,7 +64,7 @@ class RecoMovie(Resource):
         parser.add_argument('image_naver', type=str, required=True, help='This field should be a image_naver')         
         args = parser.parse_args()
         print(args)
-        movies = RecoMovieDto(args['movieid'], \
+        movies = MovieDto(args['movieid'], \
                         args['title_kor'], \
                         args['title_naver_eng'], \
                         args['genres_kor'], \
@@ -81,24 +81,24 @@ class RecoMovie(Resource):
         print('*********')
         print(f'{args}')
         try:
-            RecoMovieDao.modify_movie(args)
+            MovieDao.modify_movie(args)
             return{'code':0, 'message':'SUCCESS'}, 200
         except:
             return {'message':'An error occured registering the movie'}, 500
 
-class RecoMovies(Resource):
+class Movies(Resource):
     @staticmethod
     def post():
-        rmd = RecoMovieDao()
+        rmd = MovieDao()
         rmd.bulk()
 
     @staticmethod
     def get():
-        data = RecoMovieDao.find_all()
+        data = MovieDao.find_all()
         print(data[0])
         return data, 200        
 
-class RecoMovieDel(Resource):
+class MovieDel(Resource):
 
     @staticmethod
     def post():
@@ -112,7 +112,7 @@ class RecoMovieDel(Resource):
         print(movieid)
 
         try:
-            RecoMovieDao.delete_movie(movieid)
+            MovieDao.delete_movie(movieid)
             return{'code':0, 'message':'SUCCESS'}, 200
         except:
             return {'message':'An error occured registering the movie'}, 500

@@ -9,7 +9,7 @@ class UserDto(db.Model):  # 여기서 DB 모델 만든 것
     # The __table_args__ attribute allows passing extra arguments to that Table
 
     # Creates table columns
-    user_id: str = db.Column(db.String(30), primary_key=True, index=True)
+    usr_id: str = db.Column(db.String(30), primary_key=True, index=True)
     password: str = db.Column(db.String(30))
     fname: str = db.Column(db.String(30))
     lname: str = db.Column(db.String(30))
@@ -17,7 +17,7 @@ class UserDto(db.Model):  # 여기서 DB 모델 만든 것
     gender: str = db.Column(db.String(30))
     email: str = db.Column(db.String(80), unique=True)
 
-    def __init__(self, user_id, password, fname, lname, age, gender, email):
+    def __init__(self, usr_id, password, fname, lname, age, gender, email):
         """
         Recives 7 parameters that are used to construct User Table
         user_id = 유저 고유 아이디 (Unique)
@@ -28,7 +28,7 @@ class UserDto(db.Model):  # 여기서 DB 모델 만든 것
         gender = 성별
         email = 이메일 -> 나중에는 이메일이 아이디로 사용될 것 그래서 이것도 (Unique)
         """
-        self.user_id = user_id
+        self.usr_id = usr_id
         self.password = password
         self.fname = fname
         self.lname = lname
@@ -41,7 +41,7 @@ class UserDto(db.Model):  # 여기서 DB 모델 만든 것
         UserDto (User 모델)이 주어지면 json file 로 리턴한다 
         """
         return {
-            'user_id': self.user_id,
+            'usr_id': self.usr_id,
             'password': self.password,
             'lname': self.lname,
             'age': self.age,
@@ -54,14 +54,13 @@ class UserDto(db.Model):  # 여기서 DB 모델 만든 것
         """
         User id 를 리턴한다
         """
-        return self.user_id
-
+        return self.usr_id
 
 class UserVo:
     """
     User model 에 쓸 parameter 들을 생성 시킨다.
     """
-    user_id: str = ''
+    usr_id: str = ''
     password: str = ''
     lname: str = ''
     fname: str = ''

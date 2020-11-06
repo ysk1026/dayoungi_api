@@ -1,8 +1,9 @@
 import requests
-from com_dayoung_api.ext.db import db, openSession
 from bs4 import BeautifulSoup
-import re  # 정규식 사용
+import re
 from pandas import DataFrame
+
+from com_dayoung_api.ext.db import db, openSession
 
 class ActorDfo:
     def actors_to_df(self, actors_name, actor_id):
