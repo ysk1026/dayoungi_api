@@ -1,8 +1,14 @@
-class ActorDfo(object):
-    
+import requests
+from com_dayoung_api.ext.db import db, openSession
+from bs4 import BeautifulSoup
+import re  # 정규식 사용
+from pandas import DataFrame
+
+class ActorDfo:
     def actors_to_df(self, actors_name, actor_id):
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"}
         actors = []
+        # 화면에 보여주고 싶은 배우들
         redundant = set(["이병헌", "전지현", "손예진", "안소희", "강동원", "하정우",
                          "김혜수", "현빈", "송강호", "지창욱",  "한효주",  "정해인"])
         for name in actors_name:
@@ -134,9 +140,3 @@ class ActorDfo(object):
                                   'real_name', 'religion', 'agency', 'spouse',
                                   'children', 'debut_year', 'gender', 'state'])
         return data
-
-
-# 이 코딩만 확인 하고 싶을 시
-# if __name__ == '__main__':
-#     c = Crawling()
-#     c.crawl()

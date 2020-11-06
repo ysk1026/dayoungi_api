@@ -15,10 +15,12 @@ from sqlalchemy import func
 
 class ReviewDao(ReviewDto):
     
+    # Dataset 안에 있는 Review row count
     @classmethod
     def count(cls):
         return cls.query.count()
     
+    # 영화별로 Grouping 후 각 영화 리뷰 갯수 및 Label 카운팅
     @classmethod
     def group_by(cls):
         Session = openSession()
@@ -35,7 +37,8 @@ class ReviewDao(ReviewDto):
         titledict = {k: v for k, v in sorted(titledict.items(), key=lambda item: item[1])}
         return titledict
             
-                
+    
+    # 전체 리뷰를 불러 온다.  
     @classmethod
     def find_all(cls):
         sql = cls.query

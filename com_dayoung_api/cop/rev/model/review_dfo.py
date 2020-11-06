@@ -23,7 +23,7 @@ class ReviewDfo(object):
         df = pd.DataFrame(
             {
                 'user_id' : this.train.id,
-                'movie_id' : '1',
+                'movie_id' : '2',
                 'title' : 'Avengers',
                 'content' : this.train.document,
                 'label' : this.train.label

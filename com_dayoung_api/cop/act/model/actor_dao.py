@@ -1,6 +1,15 @@
+import json
+from com_dayoung_api.ext.db import db, openSession
+import pandas as pd
+from sqlalchemy import func
+from com_dayoung_api.cop.act.model.actor_kdd import Crawling
+# from com_dayoung_api.cop.act.resource import 
+from com_dayoung_api.cop.act.model.actor_dto import ActorDto
+from com_dayoung_api.cop.act.model.actor_dfo import ActorDfo
+
 Session = openSession()
 session = Session()
-actor_preprocess = ActorPreprocess()
+actor_preprocess = Crawling()
 
 
 class ActorDao(ActorDto):
@@ -19,7 +28,7 @@ class ActorDao(ActorDto):
         session.close()
 
     def bulk():
-        df = actor_preprocess.hook()
+        df = actor_preprocess.crawl()
         print(df.head())
         session.bulk_insert_mappings(ActorDto, df.to_dict(orient="records"))
         session.commit()
@@ -71,15 +80,6 @@ class ActorDao(ActorDto):
         actor = session.query(ActorDto).filter(ActorDto.name.like(f'{name}')).one()
         print(actor.actor_id)
         return actor.actor_id
-
-    @classmethod
-    def login(cls, actor):
-        sql = cls.query\
-            .filter(cls.actor_id.like(actor.actor_id))\
-            .filter(cls.password.like(actor.password))
-        df = pd.read_sql(sql.statement, sql.session.bind)
-        print(json.loads(df.to_json(orient='records')))
-        return json.loads(df.to_json(orient='records'))
 
     @classmethod
     def delete_actor_by_setting_state_to_one(cls, id):

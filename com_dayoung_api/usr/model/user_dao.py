@@ -1,29 +1,23 @@
-import os
-import json
-from flask import request
-from flask_restful import Resource, reqparse
-from com_dayoung_api.ext.db import db, openSession  # db 선택 Dayoungdb 에서
-import pandas as pd
-from com_dayoung_api.utils.file_helper import FileReader
+from com_dayoung_api.ext.db import db, openSession
+from com_dayoung_api.usr.model.user_dto import UserDto
+from com_dayoung_api.usr.model.user_dfo import UserDfo
 from sqlalchemy import func
-from sqlalchemy.ext.hybrid import hybrid_property
 
 Session = openSession()
 session = Session()
-user_preprocess = UserPreprocess()
-
-
 class UserDao(UserDto):
     """
         User 모델을 접근 하는 객체
         예: CRUD: (Create, Read, Update, Delete)
     """
+    
     @staticmethod
     def bulk():
         """
         모든 유저 리스트를 DataBase 안에 넣어준다
         """
-        df = user_preprocess.hook()
+        aaa = UserDfo()
+        df = aaa.hook()
         print(df.head())
         session.bulk_insert_mappings(UserDto, df.to_dict(orient="records"))
         session.commit()

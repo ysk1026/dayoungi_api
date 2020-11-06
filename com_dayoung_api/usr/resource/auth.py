@@ -1,3 +1,5 @@
+from flask_restful import Resource, reqparse
+from com_dayoung_api.usr.model.user_dao import UserDao
 class Auth(Resource):
     # self, user_id, password,fname, lname, age, gender,email
     @staticmethod
@@ -37,3 +39,4 @@ class Auth(Resource):
             return "worked"
         except Exception as e:
             return e
+    

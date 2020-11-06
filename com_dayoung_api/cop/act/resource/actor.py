@@ -1,25 +1,15 @@
+
+
+from flask_restful import Resource, reqparse
+from com_dayoung_api.cop.act.model.actor_dao import ActorDao
+
 parser = reqparse.RequestParser()
 parser.add_argument('actor_id', type=str, required=True,
                     help='This field should be a actorId')
 parser.add_argument('password', type=str, required=True,
                     help='This field should be a password')
 
-
 class Actor(Resource):
-    @staticmethod
-    def post():
-        args = parser.parse_args()
-        print(f'Actor {args["id"]} added ')
-        params = json.loads(request.get_data(), encoding='utf-8')
-        if len(params) == 0:
-
-            return 'No parameter'
-
-        params_str = ''
-        for key in params.keys():
-            params_str += 'key: {}, value: {}<br>'.format(key, params[key])
-        return {'code': 0, 'message': 'SUCCESS'}, 200
-
     @staticmethod
     def get(id: str):
         print(f'Actor {id} added ')
@@ -32,12 +22,6 @@ class Actor(Resource):
             return {'message': 'Actor not found'}, 404
 
     @staticmethod
-    def update():
-        args = parser.parse_args()
-        print(f'Actor {args["id"]} updated ')
-        return {'code': 0, 'message': 'SUCCESS'}, 200
-
-    @staticmethod
     def delete(id):
         try:
             ActorDao.delete_actor_by_setting_state_to_one(id)
@@ -45,7 +29,6 @@ class Actor(Resource):
             return {'code': 0, 'message': 'SUCCESS'}, 200
         except Exception as e:
             return e, 404
-
 
 class Actors(Resource):
     @staticmethod
@@ -60,29 +43,6 @@ class Actors(Resource):
         for actor in actors:
             data.append(actor.json())
         return data[:]
-
-
-class Access(Resource):
-    @staticmethod
-    def post():
-        args = parser.parse_args()
-        actor = ActorVo()
-        actor.actor_id = args.actorId
-        actor.password = args.password
-        print(actor.actor_id)
-        print(actor.password)
-        data = ActorDao.login(actor)
-        return data[0], 200
-
-
-class Auth(Resource):
-    @staticmethod
-    def post():
-        body = request.get_json()
-        actor = ActorDto(**body)
-        ActorDao.save(actor)
-        id = actor.actor_id
-        return {'id': str(id)}, 200
 
 
 class AddActor(Resource):

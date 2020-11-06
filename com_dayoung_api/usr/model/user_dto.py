@@ -1,12 +1,4 @@
-import os
-import json
-from flask import request
-from flask_restful import Resource, reqparse
 from com_dayoung_api.ext.db import db, openSession  # db 선택 Dayoungdb 에서
-import pandas as pd
-from com_dayoung_api.utils.file_helper import FileReader
-from sqlalchemy import func
-from sqlalchemy.ext.hybrid import hybrid_property
 
 class UserDto(db.Model):  # 여기서 DB 모델 만든 것
     """
@@ -43,21 +35,6 @@ class UserDto(db.Model):  # 여기서 DB 모델 만든 것
         self.age = age
         self.gender = gender
         self.email = email
-
-    @hybrid_property
-    def fullname(self):
-        """
-        성과 이름을 합쳐서 풀네임을 만들어서 return 한다
-        returns fullname
-        """
-        if self.fname is not None:
-            return self.fname + " " + self.lname
-        else:
-            return self.lname
-    # some_user = session.query(User).first()
-    # print(s()ome_user.fullname)
-    # as well as usable within queries:
-    # some_user = session.query(User).filter(User.fullname == "John Smith").first
 
     def json(self):
         """

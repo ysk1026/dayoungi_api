@@ -1,13 +1,6 @@
-import os
 import json
-from flask import request
 from flask_restful import Resource, reqparse
-from com_dayoung_api.ext.db import db, openSession  # db 선택 Dayoungdb 에서
-import pandas as pd
-from com_dayoung_api.utils.file_helper import FileReader
-from sqlalchemy import func
-from sqlalchemy.ext.hybrid import hybrid_property
-
+from com_dayoung_api.usr.model.user_dao import UserDao
 class User(Resource):
     """
     서버와 정보를 주고 받는다.
@@ -58,25 +51,6 @@ class User(Resource):
         UserDao.delete(id)
         print(f'User {id} Deleted')
 
-    # @staticmethod
-    # def post():
-    #     """
-    #     이거 아무것도 안하는데??
-    #     """
-    #     parser = reqparse.RequestParser()
-    #     parser.add_argument('user_id', type=str, required=True,
-    #                                             help='This field should be a user_id')
-    #     parser.add_argument('password', type=str, required=True,
-    #                                             help='This field should be a password')
-    #     args = parser.parse_args()
-    #     print(f'User {args["id"]} added ')
-    #     params = json.loads(request.get_data(), encoding='utf-8')
-    #     if len(params) == 0:
-    #         return 'No parameter'
-    #     params_str = ''
-    #     for key in params.keys():
-    #         params_str += 'key: {}, value: {}<br>'.format(key, params[key])
-    #     return {'code': 0, 'message': 'SUCCESS'}, 200
 
     @staticmethod
     def get(id: str):
@@ -93,18 +67,6 @@ class User(Resource):
         except Exception as e:
             print(e)
             return {'message': 'User not found'}, 404
-
-    # @staticmethod
-    # def update():
-    #     args = parser.parse_args()
-    #     print(f'User {args["id"]} updated ')
-    #     return {'code':0, 'message': 'SUCCESS'}, 200
-
-    # @staticmethod
-    # def delete():
-    #     args = parser.parse_args()
-    #     print(f'Us er {args["id"]} deleted')
-    #     return {'code' : 0, 'message' : 'SUCCESS'}, 200
 
 
 class Users(Resource):
@@ -127,6 +89,8 @@ class Users(Resource):
         data = UserDao.find_all()
         print("list : ", type(data))
         return data, 200
+
+
 
 
 class Delete(Resource):

@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re  # 정규식 사용
 from pandas import DataFrame
+from com_dayoung_api.cop.act.model.actor_dfo import ActorDfo
 
 
 class Crawling:
@@ -15,26 +16,19 @@ class Crawling:
         self.gender = 'm'
 
     def crawl(self):
-        # columns=['사진', '나이','이름','본명','종교','소속사', '배우자', '자녀','데뷔년도']
-        # url = "https://ko.wikipedia.org/wiki/"
-        # headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"}
-
         actors_name = self.actors_name
         actors_name = [("이병헌", "m"), ("전지현", "f"), ("손예진", "f"),
                        ("안소희", "f"), ("강동원", "m"), ("하정우",  "m"),
                        ("김혜수",  "f"), ("현빈",  "m"), ("송강호",  "m"),
                        ("지창욱",  "m"), ("한효주",  "f"), ("정해인",  "m")]
-        # dont add these set
-        # redundant = set(["이병헌", "전지현", "손예진", "안소희", "강동원", "하정우",
-        #                  "김혜수", "현빈", "송강호", "지창욱",  "한효주",  "정해인"])
-
-        # actors_url = "https://namu.wiki/w/%EB%B0%B0%EC%9A%B0/%ED%95%9C%EA%B5%AD"
-        actors_name_2 = self.crawl_actors_name()
-        actors_name.extend(actors_name_2)
+        # 밑에 코드를 주석 처리 안하면 1500개 크롤링해서 300개가 들어옴, 안하면 10개
+        # actors_name_2 = self.crawl_actors_name()
+        # actors_name.extend(actors_name_2)
         actor_id = 1
         # actors_name = ["이병헌", "이진욱"]
-        actors_name = [('이병헌', "m")]
-        data = self.actors_to_df(actors_name, actor_id)
+        # actors_name = [('이병헌', "m")]
+        Dfo = ActorDfo()
+        data = Dfo.actors_to_df(actors_name, actor_id)
         return data
 
     def crawl_actors_name(self):
@@ -64,3 +58,9 @@ class Crawling:
         return actors2
 
     
+
+
+# 이 코딩만 확인 하고 싶을 시
+# if __name__ == '__main__':
+#     c = Crawling()
+#     c.crawl()

@@ -1,3 +1,5 @@
+from com_dayoung_api.ext.db import db, openSession
+
 class ActorDto(db.Model):
     __tablename__ = 'actors'
     __table_args__ = {'mysql_collate': 'utf8_general_ci'}

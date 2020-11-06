@@ -1,15 +1,8 @@
 import os
-import json
-from flask import request
-from flask_restful import Resource, reqparse
-from com_dayoung_api.ext.db import db, openSession  # db 선택 Dayoungdb 에서
 import pandas as pd
-from com_dayoung_api.utils.file_helper import FileReader
-from sqlalchemy import func
-from sqlalchemy.ext.hybrid import hybrid_property
+from com_dayoung_api.cmm.util.file_helper import FileReader
 
-
-class UserDfo(object):
+class UserDfo:
     """
     [This class is the main operator for user]
     Creates User Database with 7 columns.
@@ -24,9 +17,11 @@ class UserDfo(object):
         self.fileReader = FileReader()
         self.path = os.path.abspath("")
 
+
     def hook(self):
         """
             Creates new model,
+
             for now it simply creates new_model which gets data from user.csv
         """
         data = self.new_model()
@@ -36,7 +31,7 @@ class UserDfo(object):
     def new_model(self) -> object:        
         path = os.path.abspath("")
         # \com_dayoung_api\
-        fname = r"\com_dayoung_api\resources\data\user.csv"
+        fname = r"/com_dayoung_api/usr/model/data/user.csv"
         data = pd.read_csv(path + fname, encoding='utf-8')
         # print('***********')
         # data = data.head()
