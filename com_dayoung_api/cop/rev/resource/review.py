@@ -70,9 +70,9 @@ class Review(Resource):
         except:
             return {'message': 'An error occured inserting the article'}, 500
     
-    def delete(self, rev_id):
+    def delete(self, id):
         print('Delete 진입')
-        review = ReviewDao.find_by_id(rev_id)
+        review = ReviewDao.find_by_id(id)
         print('리뷰 아이디', review.rev_id)
         print('전체 리뷰', review)
         print('리뷰 타입', type(review))

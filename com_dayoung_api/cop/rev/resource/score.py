@@ -4,7 +4,7 @@ import json
 from flask import jsonify
 from com_dayoung_api.cop.rev.model.review_dao import ReviewDao
 
-class Score(Resource):
+class ReviewScore(Resource):
     
     @staticmethod
     def get():

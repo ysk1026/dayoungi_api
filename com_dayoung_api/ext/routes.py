@@ -14,6 +14,11 @@ from com_dayoung_api.cop.mov.resource.search import MovieSearch
 from com_dayoung_api.cop.rat.resource.rating import Rating, Ratings, RatingDel
 from com_dayoung_api.cop.rat.resource.search import RatingSearch
 
+from com_dayoung_api.cop.rev.resource.review import Review, Reviews
+from com_dayoung_api.cop.rat.resource.my_review import MyReview
+from com_dayoung_api.cop.rat.resource.score import ReviewScore
+from com_dayoung_api.cop.rat.resource.search import ReviewSearch
+
 ############################## USER ##############################
 user = Blueprint('user', __name__, url_prefix='/api/user')
 users = Blueprint('users', __name__, url_prefix='/api/users')
@@ -40,6 +45,14 @@ ratings = Blueprint('ratings', __name__, url_prefix='/api/ratings')
 rating_search = Blueprint('rating_search', __name__, url_prefix='/api/rating-search')
 rating_del = Blueprint('rating_del', __name__, url_prefix='/api/rating-del')
 ############################## RATING ##############################
+
+############################## REVIEW ##############################
+review = Blueprint('review', __name__, url_prefix='/api/review')
+reviews = Blueprint('reviews', __name__, url_prefix='/api/reviews')
+myreview = Blueprint('myreview', __name__, url_prefix='/api/myreview')
+reviewscore = Blueprint('reviewscore', __name__, url_prefix='/api/reviewscore')
+reviewsearch = Blueprint('reviewsearch', __name__, url_prefix='/api/reviewsearch')
+############################## REVIEW ##############################
 
 
 ############################## USER ##############################
@@ -68,6 +81,14 @@ api = Api(ratings)
 api = Api(rating_search)
 api = Api(rating_del)
 ############################## RATING ##############################
+
+############################## REVIEW ##############################
+api = Api(review)
+api = Api(reviews)
+api = Api(myreview)
+api = Api(reviewscore)
+api = Api(reviewsearch)
+############################## REVIEW ##############################
 
 
 def initialize_routes(api):
@@ -99,3 +120,10 @@ def initialize_routes(api):
     api.add_resource(RatingDel, '/api/rating-del')
 ############################## RATING ##############################
 
+############################## REVIEW ##############################
+    api.add_resource(Review, '/api/review', '/api/review/<string:id>')
+    api.add_resource(Reviews, '/api/reviews')
+    api.add_resource(MyReview, '/api/myreview/<string:user_id>')
+    api.add_resource(ReviewScore, '/api/reviewscore')
+    api.add_resource(ReviewSearch, '/api/reviewsearch')
+############################## REVIEW ##############################

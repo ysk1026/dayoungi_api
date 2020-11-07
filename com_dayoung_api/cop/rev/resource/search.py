@@ -4,7 +4,7 @@ import json
 from flask import jsonify
 from com_dayoung_api.cop.rev.model.review_dao import ReviewDao
 
-class Search(Resource):
+class ReviewSearch(Resource):
     
     def get(self, movie_title):
         print("SEARCH 진입")
