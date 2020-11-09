@@ -42,9 +42,9 @@ class ReviewDao(ReviewDto):
     def find_all(cls):
         sql = cls.query
         df = pd.read_sql(sql.statement, sql.session.bind)
-        df_movie_id = df['movie_id']
+        df_movie_id = df['mov_id']
         # print(df_movie_id[1])
-        print(len(df['movie_id']))
+        print(len(df['mov_id']))
         count = 0
         for movie in df_movie_id:
             df_movie_id[count] = MovieDao.find_by_id(movie).title_kor 
@@ -84,9 +84,10 @@ class ReviewDao(ReviewDto):
     def save(review):
         Session = openSession()
         session = Session()
-        print('진입')
-        print(f'Rev id : {review.rev_id} / Movie_id :{review.movie_id}/\
-            User_id: {review.user_id}/ Title: {review.title}/ Content: {review.content} / Label: {review.label}')
+        print('SAVE 진입')
+        print(f'REVIEW: {review}')
+        print(f'Rev id : {review.rev_id} / Movie_id :{review.mov_id}/\
+            User_id: {review.usr_id}/ Title: {review.title}/ Content: {review.content} / Label: {review.label}')
         print('1 clear')
         session.add(review)
         print('2 clear')
