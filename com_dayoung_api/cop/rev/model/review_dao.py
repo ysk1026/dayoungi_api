@@ -66,20 +66,20 @@ class ReviewDao(ReviewDto):
 
         return session.query(ReviewDto).filter(ReviewDto.rev_id.like(id)).one()
     
-    # @classmethod
-    # def find_review_by_user_id(cls, user_id):
-    #     Session = openSession()
-    #     session = Session()
-    #     print("FIND BY USER ID METHOD 진입!")
-    #     print ("성공")
-    #     return session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
+    @classmethod
+    def find_review_by_user_id(cls, user_id):
+        Session = openSession()
+        session = Session()
+        print("FIND BY USER ID METHOD 진입!")
+        print ("성공")
+        return session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
     
     '''
     위에 find_review_by_user_id가 기존에 있던 코드
     밑에 껄로 join 해서 시도중, 안되면 위에껄로 다시 초기화 해야함..
     매우 어렵다
     '''
-    
+    '''
     @classmethod
     def find_review_by_user_id(cls, user_id):
         Session = openSession()
@@ -88,6 +88,13 @@ class ReviewDao(ReviewDto):
         print ("성공")
         print()
         print("USER ID의 리뷰 불러오기!")
+        f = session.query(ReviewDto).join(MovieDto).filter(MovieDto.mov_id.like(ReviewDto.mov_id)).all()
+        for a in f:
+            print(a)
+        # print(f)
+        # print(f.title_kor) 
+        # print(session.query(f).filter(f.mov_id.like(2)).one())
+        
         li = []
         count = 1
         original_review = session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
@@ -112,6 +119,7 @@ class ReviewDao(ReviewDto):
         print(li)
         # q = session.query(ReviewDto).join(MovieDto).filter(MovieDto.mov_id == mov_id).one()
         return session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
+        '''
     
     @classmethod
     def find_by_movie_title(cls, title):
