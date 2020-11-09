@@ -50,18 +50,23 @@ class ReviewAi(object):
         selected_words = [f[0] for f in text.vocab().most_common(10000)]
         return selected_words
 
-    def term_frequency(self, doc, text):
+    def term_frequency(self, doc):
+        ai = ReviewAi()
+        docs = self.create_docs()
+        train_docs = docs[0]
+        tokens = ai.create_tokens(train_docs)
+        text = ai.create_nltk_text(tokens)
         selected_words = self.transfer_text_to_selected_words(text)
         return [doc.count(word) for word in selected_words]
     
     def set_train(self):
-        # train_x = [self.term_frequency(d) for d, _ in train_docs]
+        train_x = [self.term_frequency(d) for d, _ in train_docs]
         test_x = [self.term_frequency(d) for d, _ in test_docs]
-        # train_y = [c for _, c in train_docs]
+        train_y = [c for _, c in train_docs]
         test_y = [c for _, c in test_docs]
-        # self.x_train = np.asarray(train_x).astype('float32')
+        self.x_train = np.asarray(train_x).astype('float32')
         self.x_test = np.asarray(test_x).astype('float32')
-        # self.y_train = np.asarray(train_y).astype('float32')
+        self.y_train = np.asarray(train_y).astype('float32')
         self.y_test = np.asarray(test_y).astype('float32')
 
         
