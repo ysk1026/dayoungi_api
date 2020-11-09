@@ -8,6 +8,7 @@ import os
 from com_dayoung_api.cop.rev.model.review_dfo import ReviewDfo 
 from com_dayoung_api.cop.rev.model.review_dto import ReviewDto
 from com_dayoung_api.cop.mov.model.movie_dao import MovieDao
+from com_dayoung_api.cop.mov.model.movie_dto import MovieDto, MovieVo
 from com_dayoung_api.ext.db import db, openSession
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import create_engine
@@ -65,12 +66,51 @@ class ReviewDao(ReviewDto):
 
         return session.query(ReviewDto).filter(ReviewDto.rev_id.like(id)).one()
     
+    # @classmethod
+    # def find_review_by_user_id(cls, user_id):
+    #     Session = openSession()
+    #     session = Session()
+    #     print("FIND BY USER ID METHOD 진입!")
+    #     print ("성공")
+    #     return session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
+    
+    '''
+    위에 find_review_by_user_id가 기존에 있던 코드
+    밑에 껄로 join 해서 시도중, 안되면 위에껄로 다시 초기화 해야함..
+    매우 어렵다
+    '''
+    
     @classmethod
     def find_review_by_user_id(cls, user_id):
         Session = openSession()
         session = Session()
         print("FIND BY USER ID METHOD 진입!")
         print ("성공")
+        print()
+        print("USER ID의 리뷰 불러오기!")
+        li = []
+        count = 1
+        original_review = session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
+        for rev_data in original_review:
+            df = pd.DataFrame( {
+                'usr_id' : rev_data.usr_id,
+                'mov_id' : rev_data.mov_id,
+                'title' : rev_data.title,
+                'content' : rev_data.content,
+                'label' : rev_data.label
+            }, index = [0])
+            mov_id = rev_data.mov_id
+            for u, a in session.query(ReviewDto, MovieDto).filter(mov_id == MovieDto.mov_id).all():
+                count += 1
+                if count % 2 != 0:
+                    continue
+                print("출력")
+                print(a.title_kor)
+                df['mov_id'] = a.title_kor
+                df = json.loads(df.to_json(orient='records'))
+                li.append(df)
+        print(li)
+        # q = session.query(ReviewDto).join(MovieDto).filter(MovieDto.mov_id == mov_id).one()
         return session.query(ReviewDto).filter(ReviewDto.usr_id.like(user_id)).all()
     
     @classmethod
