@@ -21,7 +21,7 @@ class Review(Resource):
         args = parser.parse_args()
 
         # review = ReviewDto(args.title, args.content, 1, args.user_id, args.movie_id)
-        review = ReviewDto(args.title, args.content, 1, "jason", args.mov_id)
+        review = ReviewDto(args.title, args.content, 1, "10", args.mov_id)
         print(f"Review: {review}")
         print('=======3======')
  

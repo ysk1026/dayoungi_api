@@ -125,5 +125,5 @@ def initialize_routes(api):
     api.add_resource(Reviews, '/api/reviews')
     api.add_resource(MyReview, '/api/myreview/<string:user_id>')
     api.add_resource(ReviewScore, '/api/reviewscore')
-    api.add_resource(ReviewSearch, '/api/reviewsearch')
+    api.add_resource(ReviewSearch, '/api/reviewsearch<string:movie_title>')
 ############################## REVIEW ##############################
