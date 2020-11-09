@@ -56,9 +56,9 @@ with app.app_context():
         print('***** RAT DATA INSERT *****')
         RatingDao.bulk()
 
-    if count_review[0] == 0:
-        print('***** REV DATA INSERT *****')
-        ReviewDao.insert_many()
+    # if count_review[0] == 0:
+    #     print('***** REV DATA INSERT *****')
+    #     ReviewDao.insert_many()
 
 print('********** INITIALIZE **********')
 initialize_routes(api)

@@ -29,7 +29,7 @@ class RatingDfo:
     def read_movie_lens_rating_csv(self):
         print('***** 무비렌즈 평점 데이터 읽기*****')
         path = os.path.abspath("")
-        fname = '\com_dayoung_api\cop\\rat\model\data\\ratings_small.csv'
+        fname = '/com_dayoung_api/cop/rat/model/data/ratings_small.csv'
         # path = os.path.abspath("")
         # fname = '\data\movie_lens\\ratings_small.csv'
         movie_lens_meta_df = pd.read_csv(path + fname, encoding='utf-8')

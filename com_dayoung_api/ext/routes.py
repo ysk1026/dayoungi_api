@@ -15,9 +15,9 @@ from com_dayoung_api.cop.rat.resource.rating import Rating, Ratings, RatingDel
 from com_dayoung_api.cop.rat.resource.search import RatingSearch
 
 from com_dayoung_api.cop.rev.resource.review import Review, Reviews
-from com_dayoung_api.cop.rat.resource.my_review import MyReview
-from com_dayoung_api.cop.rat.resource.score import ReviewScore
-from com_dayoung_api.cop.rat.resource.search import ReviewSearch
+from com_dayoung_api.cop.rev.resource.my_review import MyReview
+from com_dayoung_api.cop.rev.resource.score import ReviewScore
+from com_dayoung_api.cop.rev.resource.search import ReviewSearch
 
 ############################## USER ##############################
 user = Blueprint('user', __name__, url_prefix='/api/user')

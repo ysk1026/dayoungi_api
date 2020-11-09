@@ -36,7 +36,7 @@ class UserDfo:
     def new_model(self) -> object:        
         path = os.path.abspath("")
         # \com_dayoung_api\
-        fname = r"\com_dayoung_api\usr\model\data\user.csv"
+        fname = r"/com_dayoung_api/usr/model/data/user.csv"
         data = pd.read_csv(path + fname, encoding='utf-8')
         # print('***********')
         # data = data.head()

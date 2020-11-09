@@ -9,11 +9,11 @@ class Review(Resource):
     
     @staticmethod
     def post():
-        print('진입')
+        print('POST 진입')
         # service = ReviewService()
         parser = reqparse.RequestParser()
-        parser.add_argument('user_id', type =str, required =False, help ='This field cannot be left blank')
-        parser.add_argument('movie_id', type =int, required =False, help ='This field cannot be left blank')
+        parser.add_argument('usr_id', type =str, required =False, help ='This field cannot be left blank')
+        parser.add_argument('mov_id', type =int, required =False, help ='This field cannot be left blank')
         parser.add_argument('title', type =str, required =False, help ='This field cannot be left blank')
         parser.add_argument('content', type =str, required =False, help ='This field cannot be left blank')
         parser.add_argument('label', type =int, required =False, help ='This field cannot be left blank')
@@ -21,7 +21,8 @@ class Review(Resource):
         args = parser.parse_args()
 
         # review = ReviewDto(args.title, args.content, 1, args.user_id, args.movie_id)
-        review = ReviewDto(args.title, args.content, 1, "jason", args.movie_id)
+        review = ReviewDto(args.title, args.content, 1, "jason", args.mov_id)
+        print(f"Review: {review}")
         print('=======3======')
  
         # print(f'Rev id : {review.rev_id} / Movie_id :{review.movie_id}/\

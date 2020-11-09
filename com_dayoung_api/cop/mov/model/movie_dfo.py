@@ -75,6 +75,7 @@ class MovieDf:
         
         print('***** 무비 렌즈 UI용 DF가공 완료 *****')
 
+        # head(50) 으로 갯수 50개로 우선 조정, 삭제하면 전체 데이터 받아옴
         return merge_movie_lens_kmdb_naver_df.head(50)
         # print(movie_lens_meta_df)
         # print(movie_lens_keyword_df)
@@ -84,7 +85,7 @@ class MovieDf:
     def read_movie_lens_meta_csv(self):
         print('***** 무비렌즈 메타 데이터 읽기*****')
         path = os.path.abspath('')
-        fname = '\com_dayoung_api\cop\mov\model\data\movies_metadata.csv'
+        fname = '/com_dayoung_api/cop/mov/model/data/movies_metadata.csv'
         # path = os.path.abspath("")
         # fname = '\data\movie_lens\movies_metadata.csv'
         movie_lens_meta_df = pd.read_csv(path + fname, encoding='utf-8')
@@ -95,7 +96,7 @@ class MovieDf:
         # path = os.path.abspath("")
         # fname = '\com_dayoung_api\\resources\data\movie_lens\keywords.csv'
         path = os.path.abspath("")
-        fname = '\data\movie_lens\keywords.csv'
+        fname = '/data/movie_lens/keywords.csv'
         movie_lens_keyword_df = pd.read_csv(path + fname, encoding='utf-8')
         print('***** 무비렌즈 키워드 데이터 읽기 완료*****')
         return movie_lens_keyword_df
@@ -105,7 +106,7 @@ class MovieDf:
         # path = os.path.abspath("")
         # fname = '\com_dayoung_api\\resources\data\movie_lens\credits.csv'
         path = os.path.abspath("")
-        fname = '\data\movie_lens\credits.csv'
+        fname = '/data/movie_lens/credits.csv'
         movie_lens_credits_df = pd.read_csv(path + fname, encoding='utf-8')
         print('***** 무비렌즈 크레딧 데이터 읽기 완료*****')
         return movie_lens_credits_df
@@ -113,7 +114,7 @@ class MovieDf:
     def read_kmdb_naver_csv(self):
         print('***** kmdb 네이버 데이터 읽기*****')
         path = os.path.abspath("")
-        fname = '\com_dayoung_api\cop\mov\model\data\kmdb_naver_merge.csv'
+        fname = '/com_dayoung_api/cop/mov/model/data/kmdb_naver_merge.csv'
         # path = os.path.abspath("")
         # fname = '\data\\kmdb_naver_merge.csv' 
         kmdb_naver_df = pd.read_csv(path + fname, encoding='utf-8')
