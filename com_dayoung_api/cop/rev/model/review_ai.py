@@ -108,6 +108,8 @@ class ReviewAi(object):
             print(f"{review} ==> {round(score*100)}% 확률로 긍정 리뷰입니다.")
         else:
             print(f"{review} ==> {round((1-score)*100)}% 확률로 부정 리뷰입니다.")
+        
+        return score
 
 if __name__ == "__main__":
     ai = ReviewAi()

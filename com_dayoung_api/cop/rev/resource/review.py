@@ -4,6 +4,7 @@ import json
 from flask import jsonify
 from com_dayoung_api.cop.rev.model.review_dto import ReviewDto
 from com_dayoung_api.cop.rev.model.review_dao import ReviewDao
+from com_dayoung_api.cop.rev.model.review_ai import ReviewAi
 
 class Review(Resource):
     
@@ -16,12 +17,17 @@ class Review(Resource):
         parser.add_argument('mov_id', type =int, required =False, help ='This field cannot be left blank')
         parser.add_argument('title', type =str, required =False, help ='This field cannot be left blank')
         parser.add_argument('content', type =str, required =False, help ='This field cannot be left blank')
-        parser.add_argument('label', type =int, required =False, help ='This field cannot be left blank')
-
+        # 수정중 1
+        # parser.add_argument('label', type =int, required =False, help ='This field cannot be left blank')
+        ai = ReviewAi()
         args = parser.parse_args()
-
+        if ai.predict_review(args.content) > 0.5:
+            label = 1
+        else:
+            label = 0
+        
         # review = ReviewDto(args.title, args.content, 1, args.user_id, args.movie_id)
-        review = ReviewDto(args.title, args.content, 1, "10", args.mov_id)
+        review = ReviewDto(args.title, args.content, label, "10", args.mov_id)
         print(f"Review: {review}")
         print('=======3======')
  
