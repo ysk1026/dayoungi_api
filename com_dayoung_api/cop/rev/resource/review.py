@@ -63,9 +63,15 @@ class Review(Resource):
         
         args = parser.parse_args()
         print(args)
+        ai = ReviewAi()
+        if ai.predict_review(args.content) > 0.5:
+            label = 1
+        else:
+            label = 0
         review = ReviewDao.find_by_id(id)
         review.title = args['title']
         review.content = args['content']
+        review.label = label
         # review = ReviewDto(args)
         # data = review.json()
         # return data
